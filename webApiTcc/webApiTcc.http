@@ -1,0 +1,16 @@
+@webApiTcc_HostAddress = http://localhost:5198
+
+GET {{webApiTcc_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{webApiTcc_HostAddress}}/Usuario/BuscarUsuariosCadastrados
+Accept: application/json
+
+###
+
+POST {{webApiTcc_HostAddress}}/Usuario/
+Accept: application/json
+
+###
