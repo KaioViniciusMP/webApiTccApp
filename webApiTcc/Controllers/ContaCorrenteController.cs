@@ -1,5 +1,6 @@
 ﻿using ApiTccManagementPersonal.Application.DTO.Request;
 using Microsoft.AspNetCore.Mvc;
+using webApiTcc.Application.DTO.Request;
 using webApiTcc.Application.IServices;
 
 namespace webApiTcc.Controllers
@@ -32,6 +33,16 @@ namespace webApiTcc.Controllers
                 return Ok(result);
             else
                 return NotFound();
+        }
+
+        [HttpPost("DepositoExtra")]
+        public IActionResult DepositoExtra([FromBody] EntradaFinanceiraExtraRequest request)
+        {
+            var result = _contacorrenteservice.DepositoExtra(request);
+            if (result.status)
+                return Ok(result);
+            else
+                return BadRequest(result.status);
         }
     }
 }

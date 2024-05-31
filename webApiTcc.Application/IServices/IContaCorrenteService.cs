@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using webApiTcc.Application.DTO.Request;
 
 namespace webApiTcc.Application.IServices
 {
@@ -13,5 +14,6 @@ namespace webApiTcc.Application.IServices
     {
         StatusResponse CriarContaCorrente(ContaCorrenteRequest request);
         List<TabContaCorrente> BuscarContasCorrentesExistentes();
+        StatusResponse DepositoExtra(EntradaFinanceiraExtraRequest request);
     }
 }

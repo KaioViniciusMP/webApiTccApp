@@ -13,5 +13,6 @@ namespace webApiTcc.Application.IServices
     {
         StatusResponse CadastrarUsuario(UsuarioRequest request);
         List<TabUsuario> BuscarUsuariosCadastrados();
+        StatusResponse EditarUsuario(UsuarioRequest request, int usuarioCodigo);
     }
 }

@@ -115,7 +115,7 @@ namespace webApiTcc.Application.DAL
         {
             return ctx.Set<T>().AsNoTracking().Where(where).ToList();
         }
-        
+
         /// <summary>
         /// Valida se existe algum item através de um codigo ou parâmetro adicional, precisando de um contexto.
         /// </summary>

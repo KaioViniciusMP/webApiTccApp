@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CriandoApi8ParaTestar.Application.DTO.Request
+namespace webApiTcc.Repository.DTO
 {
-    public class UsuarioRequest
+    public class UsuarioResponse
     {
+        public int codigo { get; set; }
         public string nome { get; set; }
         public string usuario { get; set; }
         public string senha { get; set; }

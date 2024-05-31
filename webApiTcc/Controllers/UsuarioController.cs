@@ -33,5 +33,17 @@ namespace webApiTcc.Controllers
             else
                 return BadRequest(response);
         }
+
+        [HttpPut]
+
+        [Route("{codigoUsuario}")]
+        public IActionResult EditarUsuario([FromBody] UsuarioRequest request, int codigoUsuario)
+        {
+            var response = _usuarioService.EditarUsuario(request, codigoUsuario);
+            if (response.status)
+                return Ok(response);
+            else
+                return BadRequest(response);
+        }
     }
 }
