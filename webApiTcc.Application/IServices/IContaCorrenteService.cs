@@ -14,6 +14,5 @@ namespace webApiTcc.Application.IServices
     {
         StatusResponse CriarContaCorrente(ContaCorrenteRequest request);
         List<TabContaCorrente> BuscarContasCorrentesExistentes();
-        StatusResponse DepositoExtra(EntradaFinanceiraExtraRequest request);
     }
 }

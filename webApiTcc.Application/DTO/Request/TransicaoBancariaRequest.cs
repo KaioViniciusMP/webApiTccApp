@@ -10,7 +10,7 @@ namespace ApiTccManagementPersonal.Application.DTO.Request
     {
         public DateTime dataTransacao { get; set; }
         public decimal valorTransacao { get; set; }
-        public string forma_Pagamento { get; set; }
+        public string formaPagamento { get; set; }
         public int contaCorrenteCodigo { get; set; }
         public int modalidadeCodigo { get; set; }
         public string titulo { get; set; }

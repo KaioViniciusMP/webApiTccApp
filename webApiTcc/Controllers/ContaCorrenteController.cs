@@ -34,15 +34,5 @@ namespace webApiTcc.Controllers
             else
                 return NotFound();
         }
-
-        [HttpPost("DepositoExtra")]
-        public IActionResult DepositoExtra([FromBody] EntradaFinanceiraExtraRequest request)
-        {
-            var result = _contacorrenteservice.DepositoExtra(request);
-            if (result.status)
-                return Ok(result);
-            else
-                return BadRequest(result.status);
-        }
     }
 }

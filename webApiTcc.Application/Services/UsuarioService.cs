@@ -35,6 +35,7 @@ namespace webApiTcc.Application.Services
             {
                 var usuario = new TabUsuario()
                 {
+                    nome = request.nome,
                     senha = request.senha,
                     usuario = request.usuario
                 };

@@ -1,6 +1,8 @@
 ﻿using ApiTccManagementPersonal.Application.DTO.Request;
 using Microsoft.AspNetCore.Mvc;
+using webApiTcc.Application.DTO.Request;
 using webApiTcc.Application.IServices;
+using webApiTcc.Application.Services;
 
 namespace webApiTcc.Controllers
 {
@@ -28,10 +30,31 @@ namespace webApiTcc.Controllers
         public IActionResult BuscarHistoricoTransacoes([FromRoute] int codigoContaCorrente)
         {
             var result = _transacoesservice.BuscarHistoricoTransacoes(codigoContaCorrente);
-            if (result != null)
+            if (result != null && result.Count > 0)
                 return Ok(result);
             else
                 return NotFound();
         }
+
+        [HttpPost("DepositoExtra")]
+        public IActionResult DepositoExtra([FromBody] EntradaFinanceiraExtraRequest request)
+        {
+            var result = _transacoesservice.DepositoExtra(request);
+            if (result.status)
+                return Ok(result);
+            else
+                return BadRequest(result.status);
+        }
+
+        [HttpPost("DetalhesTransacao")]
+        public IActionResult DetalhesTransacaoFeita([FromBody] DetalhesTransacaoFeitaRequest request)
+        {
+            var result = _transacoesservice.DetalhesTransacaoFeita(request);
+            if (result == null)
+                return NotFound();
+            else
+                return Ok(result);
+        }
     }
 }
+

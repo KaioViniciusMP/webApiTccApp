@@ -12,7 +12,7 @@ namespace CriandoApi8ParaTestar.Repository.Models
         [Key]
         public int codigo { get; set; }
         public int contaCorrenteCodigo { get; set; }
-        public string forma_pagamento { get; set; }
+        public string formaPagamento { get; set; }
         public DateTime dataValidade { get; set; }
         public string bandeiraCartao { get; set; }
         public string CVV { get; set; }

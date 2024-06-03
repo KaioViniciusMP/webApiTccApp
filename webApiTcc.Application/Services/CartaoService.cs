@@ -39,7 +39,7 @@ namespace webApiTcc.Application.Services
 
                 var objCartao = new TabCartao()
                 {
-                    forma_pagamento = request.forma_pagamento,
+                    formaPagamento = request.forma_pagamento,
                     dataValidade = request.dataValidade,
                     bandeiraCartao = request.bandeiraCartao,
                     CVV = request.CVV,

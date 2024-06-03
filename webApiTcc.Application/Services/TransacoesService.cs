@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using webApiTcc.Application.DAL;
+using webApiTcc.Application.DTO.Request;
+using webApiTcc.Application.DTO.Response;
 using webApiTcc.Application.IServices;
 using webApiTcc.Repository;
 
@@ -32,7 +34,7 @@ namespace webApiTcc.Application.Services
                     // Obtém o cartão específico
                     var cartao = _context.tabCartao.FirstOrDefault(
                         s => s.CVV == request.cvvCartao &&
-                        s.forma_pagamento == request.forma_Pagamento &&
+                        s.formaPagamento == request.formaPagamento &&
                         s.contaCorrenteCodigo == request.contaCorrenteCodigo);
 
                     if (cartao == null)
@@ -75,7 +77,7 @@ namespace webApiTcc.Application.Services
                         modalidadeCodigo = request.modalidadeCodigo,
                         descricao = request.descricao,
                         titulo = request.titulo,
-                        forma_Pagamento = request.forma_Pagamento,
+                        formaPagamento = request.formaPagamento,
                         usuarioCodigo = request.usuarioCodigo,
                         cvvCartao = request.cvvCartao
                     };
@@ -101,7 +103,6 @@ namespace webApiTcc.Application.Services
                 return response;
             }
         }
-
         public List<TabHistoricoTransacao> BuscarHistoricoTransacoes(int codigoContaCorrente)
         {
             try
@@ -112,6 +113,119 @@ namespace webApiTcc.Application.Services
             {
                 throw ex;
             }
+        }
+        public StatusResponse DepositoExtra(EntradaFinanceiraExtraRequest request)
+        {
+            StatusResponse response = new StatusResponse();
+
+            // Na tabela de historico de transação tem que colocar mais uma coluna definindo se esta acontecendo um deposito ou uma transferencia de dinheiro
+            // Ou seja, uma entrada ou uma saida
+
+            try
+            {
+                var usuario = SuporteDal.PesquisarFirstOrDefault<TabUsuario>(u => u.codigo == request.usuarioCodigo, _context);
+                if (usuario == null)
+                {
+                    response.status = false;
+                    response.message = "Usuário não encontrado.";
+                    return response;
+                }
+
+                // Verifique se a conta corrente existe e pertence ao usuário especificado
+                var contaCorrente = SuporteDal.PesquisarFirstOrDefault<TabContaCorrente>(
+                    c => c.codigo == request.contaCorrenteCodigo && c.usuarioCodigo == request.usuarioCodigo, _context);
+
+                if (contaCorrente == null)
+                {
+                    response.status = false;
+                    response.message = "Conta corrente não encontrada ou não pertence ao usuário especificado.";
+                    return response;
+                }
+
+                // Atualizar o saldo da conta corrente existente
+                contaCorrente.saldo += request.valorEntrada;
+
+                _context.tabContaCorrente.Update(contaCorrente);
+                _context.SaveChanges();
+
+                TabHistoricoTransacao tabHistoricoTransacao = new TabHistoricoTransacao();
+                tabHistoricoTransacao.valorTransacao = request.valorEntrada;
+                tabHistoricoTransacao.cvvCartao = request.cvvCartao;
+                tabHistoricoTransacao.dataTransacao = DateTime.Now;
+                tabHistoricoTransacao.descricao = request.descricao;
+                tabHistoricoTransacao.formaPagamento = request.forma_Pagamento;
+                tabHistoricoTransacao.contaCorrenteCodigo = contaCorrente.codigo;
+                tabHistoricoTransacao.usuarioCodigo = request.usuarioCodigo;
+                tabHistoricoTransacao.modalidadeCodigo = request.modalidadeCodigo;
+                tabHistoricoTransacao.titulo = request.titulo;
+
+
+                _context.tabHistoricoTransacao.Add(tabHistoricoTransacao);
+                _context.SaveChanges();
+
+                response.status = true;
+                response.message = $"Deposito feito na conta corrente {contaCorrente.agencia} realizado com sucesso!";
+                return response;
+
+            }
+            catch (Exception ex)
+            {
+                response.status = false;
+                response.message = $"Não foi possivel transferir uma entrada financeira. Error: {ex.Message}";
+                return response;
+            }
+        }
+        public TransacaoFeitaResponse DetalhesTransacaoFeita(DetalhesTransacaoFeitaRequest request)
+        {
+            try
+            {
+                var item = (from tht in _context.tabHistoricoTransacao
+                            join tm in _context.tabModalidade on tht.modalidadeCodigo equals tm.codigo
+                            join tc in _context.tabCartao on tht.cvvCartao equals tc.CVV
+                            join tcc in _context.tabContaCorrente on tht.contaCorrenteCodigo equals tcc.codigo
+                            join tu in _context.tabUsuario on tht.usuarioCodigo equals tu.codigo
+                            where tht.codigo == request.codigoTransacaoFeita & tht.usuarioCodigo == request.codigoUsuario
+                            select new
+                            {
+                                codigoTransacao = tht.codigo,//codigoTransacao
+                                tituloTransacao = tht.titulo,//tituloTransacao
+                                descricaoTransacao = tht.descricao,
+                                agenciaUsada = tcc.agencia,
+                                formaPagamentoUsada = tht.formaPagamento,
+                                valorTransacaoFeita = tht.valorTransacao,
+                                modalidade = tm.nomeModalidade,
+                                dataTransacaoFeita = tht.dataTransacao,
+                                cvv = tc.CVV,
+                                bandeiraCartaoUtilizado = tc.bandeiraCartao,
+                                codigoUsuarioUsado = tht.usuarioCodigo
+                            }).FirstOrDefault();
+
+                if (item != null)
+                    return ToResponseDetalhesTransacaoFeita(item);
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private TransacaoFeitaResponse ToResponseDetalhesTransacaoFeita(dynamic obj)
+        {
+            return new TransacaoFeitaResponse
+            {
+                codigoTransacao = obj.codigo,
+                agencia = obj.agencia,
+                bandeiraCartao = obj.bandeiraCartao,
+                codigoUsuario = obj.usuarioCodigo,
+                cvv = obj.cvv,
+                dataTransacao = obj.dataTransacao,
+                descricao = obj.descricao,
+                nomeModalidade = obj.nomeModalidade,
+                titulo = obj.titulo,
+                valorTransacao = obj.valorTransacao,
+                formaPagamento = obj.formaPagamento,
+            };
         }
     }
 }

@@ -15,5 +15,7 @@ namespace webApiTcc.Application.DTO.Request
         public string forma_Pagamento { get; set; }
         public int usuarioCodigo { get; set; }
         public int modalidadeCodigo { get; set; }
+        public string cvvCartao { get; set; }
+        public string titulo { get; set; }
     }
 }
