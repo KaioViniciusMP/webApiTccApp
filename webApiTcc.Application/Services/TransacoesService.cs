@@ -214,17 +214,17 @@ namespace webApiTcc.Application.Services
         {
             return new TransacaoFeitaResponse
             {
-                codigoTransacao = obj.codigo,
-                agencia = obj.agencia,
-                bandeiraCartao = obj.bandeiraCartao,
-                codigoUsuario = obj.usuarioCodigo,
+                codigoTransacao = obj.codigoTransacao,
+                agencia = obj.agenciaUsada,
+                bandeiraCartao = obj.bandeiraCartaoUtilizado,
+                codigoUsuario = obj.codigoUsuarioUsado,
                 cvv = obj.cvv,
-                dataTransacao = obj.dataTransacao,
-                descricao = obj.descricao,
-                nomeModalidade = obj.nomeModalidade,
-                titulo = obj.titulo,
-                valorTransacao = obj.valorTransacao,
-                formaPagamento = obj.formaPagamento,
+                dataTransacao = obj.dataTransacaoFeita,
+                descricao = obj.descricaoTransacao,
+                nomeModalidade = obj.modalidade,
+                titulo = obj.tituloTransacao,
+                valorTransacao = obj.valorTransacaoFeita,
+                formaPagamento = obj.formaPagamentoUsada,
             };
         }
     }
