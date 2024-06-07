@@ -53,6 +53,7 @@ namespace webApiTcc.Application.Services
 
                 response.status = true;
                 response.message = "Cadastro de usuario feito com sucesso";
+                response.objInfo = usuario;
 
                 return response;
             }
@@ -85,11 +86,13 @@ namespace webApiTcc.Application.Services
                 objUs.senha = request.senha;
                 objUs.nome = request.nome;
 
-                _context.tabUsuario.Update(objUs /*usuario*/);
+                _context.tabUsuario.Update(objUs);
                 _context.SaveChanges();
 
                 response.status = true;
                 response.message = $"Usuario Atualizado com sucesso.";
+                response.objInfo = objUs;
+
                 return response;
             }
             catch (Exception ex)

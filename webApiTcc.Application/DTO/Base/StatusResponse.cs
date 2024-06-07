@@ -10,5 +10,6 @@ namespace CriandoApi8ParaTestar.Application.DTO.Base
     {
         public bool status { get; set; }
         public string message { get; set; }
+        public object? objInfo { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace webApiTcc.Controllers
         {
             var result = _cartaoservice.InserirCartao(request);
             if (result.status)
-                return Ok(result.message);
+                return Ok(result);
             else
                 return BadRequest(result.message);
         }

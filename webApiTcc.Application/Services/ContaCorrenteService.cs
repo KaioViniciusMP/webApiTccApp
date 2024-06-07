@@ -43,11 +43,20 @@ namespace webApiTcc.Application.Services
                     usuarioCodigo = usuarioCodigo.codigo,
                 };
 
+                if(_context.tabContaCorrente.Any(c => c.agencia == objContaCorrente.agencia) == true)
+                {
+                    response.status = false;
+                    response.message = $"Ops, Já existe uma agencia com esse nome cadastrada.";
+                    return response;
+                }
+
                 _context.tabContaCorrente.Add(objContaCorrente);
                 _context.SaveChanges();
 
                 response.status = true;
                 response.message = $"Conta corrente criada e vinculada ao usuario com sucesso.";
+                response.objInfo = objContaCorrente;
+
                 return response;
             }
             catch (Exception ex)

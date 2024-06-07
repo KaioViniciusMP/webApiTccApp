@@ -90,6 +90,7 @@ namespace webApiTcc.Application.Services
 
                     response.status = true;
                     response.message = "Compra realizada com sucesso.";
+                    response.objInfo = historicoTransacao;
                     return response;
                 }
 
@@ -165,7 +166,8 @@ namespace webApiTcc.Application.Services
                 _context.SaveChanges();
 
                 response.status = true;
-                response.message = $"Deposito feito na conta corrente {contaCorrente.agencia} realizado com sucesso!";
+                response.message = $"Deposito realizado com sucesso!";
+                response.objInfo = tabHistoricoTransacao;
                 return response;
 
             }

@@ -52,6 +52,8 @@ namespace webApiTcc.Application.Services
 
                 response.status = true;
                 response.message = $"Cartão criado e vinculado a uma conta corrente com sucesso.";
+                response.objInfo = objCartao;
+
                 return response;
             }
             catch (Exception ex)
