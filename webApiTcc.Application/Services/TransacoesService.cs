@@ -79,7 +79,8 @@ namespace webApiTcc.Application.Services
                         titulo = request.titulo,
                         formaPagamento = request.formaPagamento,
                         usuarioCodigo = request.usuarioCodigo,
-                        cvvCartao = request.cvvCartao
+                        cvvCartao = request.cvvCartao,
+                        isDeposito = false
                     };
 
                     _context.tabHistoricoTransacao.Add(historicoTransacao);
@@ -146,7 +147,6 @@ namespace webApiTcc.Application.Services
                 contaCorrente.saldo += request.valorEntrada;
 
                 _context.tabContaCorrente.Update(contaCorrente);
-                _context.SaveChanges();
 
                 TabHistoricoTransacao tabHistoricoTransacao = new TabHistoricoTransacao();
                 tabHistoricoTransacao.valorTransacao = request.valorEntrada;
@@ -158,6 +158,7 @@ namespace webApiTcc.Application.Services
                 tabHistoricoTransacao.usuarioCodigo = request.usuarioCodigo;
                 tabHistoricoTransacao.modalidadeCodigo = request.modalidadeCodigo;
                 tabHistoricoTransacao.titulo = request.titulo;
+                tabHistoricoTransacao.isDeposito = true;
 
 
                 _context.tabHistoricoTransacao.Add(tabHistoricoTransacao);

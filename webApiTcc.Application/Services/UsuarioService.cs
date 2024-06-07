@@ -40,6 +40,14 @@ namespace webApiTcc.Application.Services
                     usuario = request.usuario
                 };
 
+                if(_context.tabUsuario.Any(u => u.usuario == usuario.usuario) != false)
+                {
+                    response.status = false;
+                    response.message = $"Esse usuario já esta registrado!";
+
+                    return response;
+                }
+
                 _context.tabUsuario.Add(usuario);
                 _context.SaveChanges();
 

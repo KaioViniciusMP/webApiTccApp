@@ -20,5 +20,6 @@ namespace CriandoApi8ParaTestar.Repository.Models
         public string descricao { get; set; }
         public int usuarioCodigo { get; set; }
         public string cvvCartao { get; set; }
+        public bool isDeposito { get; set; }
     }
 }
