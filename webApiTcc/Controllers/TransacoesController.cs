@@ -65,6 +65,16 @@ namespace webApiTcc.Controllers
             else 
                 return Ok(result);
         }
+
+        [HttpPost("BuscarHistoricoTransacoesPorModalidade")]
+        public IActionResult BuscarHistoricoTransacoesPorModalidade([FromBody] HistoricoTransacoesPorModalidadeRequest request)
+        {
+            var result = _transacoesservice.BuscarHistoricoTransacoesPorModalidade(request);
+            if (result != null && result.Count > 0)
+                return Ok(result);
+            else
+                return NotFound();
+        }
     }
 }
 

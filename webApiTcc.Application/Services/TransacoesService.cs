@@ -256,5 +256,30 @@ namespace webApiTcc.Application.Services
                 throw ex;
             }
         }
+        public List<TabHistoricoTransacao> BuscarHistoricoTransacoesPorModalidade(HistoricoTransacoesPorModalidadeRequest request)
+        {
+            try
+            {
+                if (request.usuarioCodigo == 0)
+                {
+                    throw new ArgumentException("Usuario codigo inválido.");
+                }
+
+                if (_context.tabHistoricoTransacao == null)
+                {
+                    throw new InvalidOperationException("A tabela 'tabHistoricoTransacao' está nula.");
+                }
+
+
+                //var result = SuporteDal.ListarPorCodigo<TabHistoricoTransacao>(x => x.contaCorrenteCodigo == codigoContaCorrente, _context);
+                var result = _context.tabHistoricoTransacao.Where(x => x.modalidadeCodigo == request.modalidadeCodigo && x.usuarioCodigo == request.usuarioCodigo).ToList();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

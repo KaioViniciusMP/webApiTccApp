@@ -18,5 +18,6 @@ namespace webApiTcc.Application.IServices
         StatusResponse DepositoExtra(EntradaFinanceiraExtraRequest request);
         TransacaoFeitaResponse DetalhesTransacaoFeita(DetalhesTransacaoFeitaRequest request);
         List<TabModalidade> BuscarModalidades();
+        List<TabHistoricoTransacao> BuscarHistoricoTransacoesPorModalidade(HistoricoTransacoesPorModalidadeRequest request);
     }
 }
