@@ -1,5 +1,6 @@
 ﻿using ApiTccManagementPersonal.Application.DTO.Request;
 using Microsoft.AspNetCore.Mvc;
+using webApiTcc.Application.DTO.Request;
 using webApiTcc.Application.IServices;
 
 namespace webApiTcc.Controllers
@@ -25,9 +26,9 @@ namespace webApiTcc.Controllers
         }
 
         [HttpGet]
-        public IActionResult BuscarCartoesCadastrados()
+        public IActionResult BuscarCartoesCadastrados(BuscarCartoesCadastradosRequest request)
         {
-            var result = _cartaoservice.BuscarCartoesCadastrados();
+            var result = _cartaoservice.BuscarCartoesCadastrados(request);
             if (result != null && result.Count > 0)
                 return Ok(result);
             else
