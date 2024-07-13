@@ -17,5 +17,6 @@ namespace webApiTcc.Application.IServices
         List<TabHistoricoTransacao> BuscarHistoricoTransacoes(int codigoContaCorrente);
         StatusResponse DepositoExtra(EntradaFinanceiraExtraRequest request);
         TransacaoFeitaResponse DetalhesTransacaoFeita(DetalhesTransacaoFeitaRequest request);
+        List<TabModalidade> BuscarModalidades();
     }
 }

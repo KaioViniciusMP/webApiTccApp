@@ -109,7 +109,22 @@ namespace webApiTcc.Application.Services
         {
             try
             {
-                return SuporteDal.ListarPorCodigo<TabHistoricoTransacao>(x => x.contaCorrenteCodigo == codigoContaCorrente, _context);
+                if (codigoContaCorrente <= 0)
+                {
+                    throw new ArgumentException("Código da conta corrente inválido.");
+                }
+
+                // Verifica se a tabela não é nula
+                if (_context.tabHistoricoTransacao == null)
+                {
+                    throw new InvalidOperationException("A tabela 'tabHistoricoTransacao' está nula.");
+                }
+
+
+                //var result = SuporteDal.ListarPorCodigo<TabHistoricoTransacao>(x => x.contaCorrenteCodigo == codigoContaCorrente, _context);
+                var result = _context.tabHistoricoTransacao.Where(x => x.contaCorrenteCodigo == codigoContaCorrente).ToList();
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -229,6 +244,17 @@ namespace webApiTcc.Application.Services
                 valorTransacao = obj.valorTransacaoFeita,
                 formaPagamento = obj.formaPagamentoUsada,
             };
+        }
+        public List<TabModalidade> BuscarModalidades()
+        {
+            try
+            {
+                return _context.tabModalidade.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

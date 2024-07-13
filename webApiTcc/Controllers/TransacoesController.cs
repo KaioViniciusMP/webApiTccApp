@@ -55,6 +55,16 @@ namespace webApiTcc.Controllers
             else
                 return Ok(result);
         }
+
+        [HttpGet("BuscarModalidades")]
+        public IActionResult BuscarModalidades()
+        {
+            var result = _transacoesservice.BuscarModalidades();
+            if(result == null)
+                return NotFound();
+            else 
+                return Ok(result);
+        }
     }
 }
 
