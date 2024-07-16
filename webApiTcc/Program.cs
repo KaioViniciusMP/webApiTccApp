@@ -19,6 +19,7 @@ builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IContaCorrenteService, ContaCorrenteService>();
 builder.Services.AddScoped<ITransacoesService, TransacoesService>();
 builder.Services.AddScoped<ICartaoService, CartaoService>();
+builder.Services.AddScoped<IAutenticacoesServices, AutenticacoesService>();
 
 var app = builder.Build();
 
