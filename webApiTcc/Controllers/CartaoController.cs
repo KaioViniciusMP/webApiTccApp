@@ -25,7 +25,7 @@ namespace webApiTcc.Controllers
                 return BadRequest(result.message);
         }
 
-        [HttpGet]
+        [HttpPost("BuscarCartoesCadastrados")]
         public IActionResult BuscarCartoesCadastrados(BuscarCartoesCadastradosRequest request)
         {
             var result = _cartaoservice.BuscarCartoesCadastrados(request);
