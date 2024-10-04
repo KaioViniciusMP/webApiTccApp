@@ -23,12 +23,38 @@ namespace webApiTcc.Controllers
         [HttpPost]
         public IActionResult Login([FromBody] AutenticacaoRequest request)
         {
-            AutenticacaoResponse resposta = _autenticacoesServices.Autenticar(request);
-            if (resposta == null)
+            try
             {
-                return Unauthorized();
+                AutenticacaoResponse resposta = _autenticacoesServices.Autenticar(request);
+                if (resposta == null)
+                {
+                    return Unauthorized();
+                }
+                return Ok(resposta);
             }
-            return Ok(resposta);
+            catch (Exception ex)
+            {
+                var exception = new GravaLogExceptionRequest
+                {
+                    dataHora = DateTime.Now,
+                    excecao = ex.Message,
+                    referencia = $"Rota: Autenticacoes - Metodo: Login - Usuario: {request.Usuario}"
+                };
+
+                _autenticacoesServices.GravaLogException(exception);
+                return BadRequest();
+            }
+
+        }
+        [HttpPost("GravaLogException")]
+        public IActionResult GravaLogException(GravaLogExceptionRequest request)
+        {
+            bool resposta = _autenticacoesServices.GravaLogException(request);
+            if (resposta == true)
+                return Ok();
+            else
+                return BadRequest();
+
         }
     }
 }

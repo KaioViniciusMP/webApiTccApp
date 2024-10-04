@@ -10,6 +10,7 @@ using webApiTcc.Application.DTO.Request;
 using webApiTcc.Application.DTO.Response;
 using webApiTcc.Application.IServices;
 using webApiTcc.Repository;
+using webApiTcc.Repository.Models;
 
 namespace webApiTcc.Application.Services
 {
@@ -58,5 +59,29 @@ namespace webApiTcc.Application.Services
             var stringToken = tokenHandler.WriteToken(token);
             return stringToken;
         }
+
+        public bool GravaLogException(GravaLogExceptionRequest request)
+        {
+            try
+            {
+                var exception = new tabLogExcecao
+                {
+                    dataHora = DateTime.Now,
+                    excecao = request.excecao,
+                    referencia = request.referencia
+                };
+
+                _context.tabLogExcecao.Add(exception);
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
     }
 }
+

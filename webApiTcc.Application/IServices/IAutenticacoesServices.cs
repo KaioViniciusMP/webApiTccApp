@@ -13,5 +13,6 @@ namespace webApiTcc.Application.IServices
     {
         AutenticacaoResponse Autenticar(AutenticacaoRequest request);
         string GerarTokenJwt(TabUsuario usuario);
+        bool GravaLogException(GravaLogExceptionRequest request);
     }
 }
