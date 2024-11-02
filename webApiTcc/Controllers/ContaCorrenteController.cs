@@ -67,5 +67,31 @@ namespace webApiTcc.Controllers
                 return BadRequest();
             }
         }
+        
+        [HttpPost]
+        [Route("BuscarContasCorrentesExistentesPorUsuario/{codigoUsuario}")]
+        public IActionResult BuscarContasCorrentesExistentesPorUsuario(int codigoUsuario)
+        {
+            try
+            {
+                var result = _contacorrenteservice.BuscarContasCorrentesExistentesPorUsuario(codigoUsuario);
+                if (result != null)
+                    return Ok(result);
+                else
+                    return NotFound();
+            }
+            catch (Exception ex)
+            {
+                var exception = new GravaLogExceptionRequest
+                {
+                    dataHora = DateTime.Now,
+                    excecao = ex.Message,
+                    referencia = $"Rota: ContaCorrente - Metodo: BuscarContasCorrentesExistentes"
+                };
+
+                _autenticacoesServices.GravaLogException(exception);
+                return BadRequest();
+            }
+        }
     }
 }

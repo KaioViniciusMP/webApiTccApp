@@ -14,5 +14,6 @@ namespace webApiTcc.Application.IServices
     {
         StatusResponse CriarContaCorrente(ContaCorrenteRequest request);
         List<TabContaCorrente> BuscarContasCorrentesExistentes();
+        List<TabContaCorrente> BuscarContasCorrentesExistentesPorUsuario(int codigoUsuario);
     }
 }

@@ -70,5 +70,11 @@ namespace webApiTcc.Application.Services
         {
             return SuporteDal.Listar<TabContaCorrente>(_context);
         }
+
+        public List<TabContaCorrente> BuscarContasCorrentesExistentesPorUsuario(int codigoUsuario)
+        {
+            var usuarios = _context.tabContaCorrente.Where(c => c.usuarioCodigo == codigoUsuario).ToList();
+            return usuarios;
+        }
     }
 }
